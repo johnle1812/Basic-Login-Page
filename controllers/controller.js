@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const registerUser = async (req, res) => {
   try {
@@ -46,6 +47,24 @@ const loginUser = async (req, res) => {
     // Check password
     const match = await bcrypt.compare(password, user.password);
     if (match) {
+      const token = jwt.sign(
+        {
+          userId: user._id,
+          username: user.username,
+          role: user.role || "user",
+        },
+        process.env.JWT_SECRET_KEY,
+        { expiresIn: "1h" }
+      );
+
+      jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
+        if (err) {
+          console.error("JWT verification failed:", err);
+          return res.status(401).send("Unauthorized");
+        }
+        console.log("JWT verified successfully:", decoded);
+      });
+      res.cookie("token", token, { httpOnly: true });
       res.status(200).redirect("/home");
     } else {
       res.status(400).send("Invalid credentials");
