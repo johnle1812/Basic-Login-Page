@@ -3,33 +3,85 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign Up Page</title>
+    <title><%= pageTitle %> | Basic Login Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
   </head>
-  <body>
-    <h2>Sign Up</h2>
-    <form action="/signup" class="signup-container" method="post">
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          placeholder="Enter a username"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="password"
-          required
-        />
-      </div>
-      <button type="submit">Sign Up</button>
-    </form>
-    <p>Already have an account? <a href="/">Login</a></p>
+  <body class="auth-page">
+    <main class="auth-shell">
+      <section class="brand-panel">
+        <p class="eyebrow">Account Setup</p>
+        <h1>Create a simple account in a much nicer space.</h1>
+        <p class="hero-copy">
+          Your signup screen now matches the login experience, with clearer
+          structure and a stronger visual identity across the app.
+        </p>
+        <div class="feature-grid">
+          <article>
+            <span>Simple</span>
+            <p>Only the essentials, without a cluttered screen.</p>
+          </article>
+          <article>
+            <span>Consistent</span>
+            <p>Shared styling across login, signup, and home.</p>
+          </article>
+          <article>
+            <span>Deployable</span>
+            <p>Ready for hosted environments with env-based config.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card-panel">
+        <div class="card">
+          <p class="card-kicker">Get started</p>
+          <h2>Create your account</h2>
+          <p class="card-copy">
+            Pick a username and password to create your login.
+          </p>
+
+          <% if (error) { %>
+          <div class="message message-error"><%= error %></div>
+          <% } %>
+
+          <% if (success) { %>
+          <div class="message message-success"><%= success %></div>
+          <% } %>
+
+          <form action="/signup" class="auth-form" method="post">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="new-user"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Create a strong password"
+                required
+              />
+            </div>
+            <button type="submit">Sign Up</button>
+          </form>
+
+          <p class="switch-link">
+            Already have an account? <a href="/">Back to login</a>
+          </p>
+        </div>
+      </section>
+    </main>
   </body>
 </html>

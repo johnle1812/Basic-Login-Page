@@ -3,9 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home Page</title>
+    <title>Home | Basic Login Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
   </head>
-  <body>
-    <h1>Welcome to our HOME PAGE!!!</h1>
+  <body class="home-page">
+    <main class="home-shell">
+      <section class="home-card">
+        <p class="eyebrow">Signed In</p>
+        <h1>Welcome, <%= username %>.</h1>
+        <p class="hero-copy">
+          Your login flow is working, the styling is refreshed, and the app is
+          prepared for deployment with secure environment variables.
+        </p>
+        <div class="home-actions">
+          <a class="button-link" href="/">Log out</a>
+          <a class="button-link button-link-secondary" href="/signup"
+            >Create another user</a
+          >
+        </div>
+      </section>
+    </main>
   </body>
 </html>

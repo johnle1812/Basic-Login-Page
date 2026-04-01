@@ -2,6 +2,11 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const redirectWithMessage = (res, path, type, message) => {
+  const params = new URLSearchParams({ [type]: message });
+  return res.redirect(`${path}?${params.toString()}`);
+};
+
 const registerUser = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -9,7 +14,12 @@ const registerUser = async (req, res) => {
     // Check if user already exists
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-      return res.status(400).send("User already exists");
+      return redirectWithMessage(
+        res,
+        "/signup",
+        "error",
+        "That username is already taken."
+      );
     }
 
     // Hash the password
@@ -24,13 +34,20 @@ const registerUser = async (req, res) => {
     await newUser.save();
 
     if (newUser) {
-      res.status(201).redirect("/home");
+      return res.redirect(
+        `/home?username=${encodeURIComponent(newUser.username)}`
+      );
     }
 
     console.log(newUser);
   } catch (error) {
     console.error("Error during user registration:", error);
-    res.status(500).send("Internal Server Error");
+    return redirectWithMessage(
+      res,
+      "/signup",
+      "error",
+      "We couldn't create your account. Please try again."
+    );
   }
 };
 
@@ -41,7 +58,12 @@ const loginUser = async (req, res) => {
     // Find user in DB
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(400).send("User does not exist");
+      return redirectWithMessage(
+        res,
+        "/",
+        "error",
+        "We couldn't find an account with that username."
+      );
     }
 
     // Check password
@@ -60,18 +82,33 @@ const loginUser = async (req, res) => {
       jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
         if (err) {
           console.error("JWT verification failed:", err);
-          return res.status(401).send("Unauthorized");
+          return redirectWithMessage(
+            res,
+            "/",
+            "error",
+            "Your session could not be created."
+          );
         }
         console.log("JWT verified successfully:", decoded);
       });
       res.cookie("token", token, { httpOnly: true });
-      res.status(200).redirect("/home");
+      return res.redirect(`/home?username=${encodeURIComponent(user.username)}`);
     } else {
-      res.status(400).send("Invalid credentials");
+      return redirectWithMessage(
+        res,
+        "/",
+        "error",
+        "Your password didn't match. Please try again."
+      );
     }
   } catch (error) {
     console.error("Error during user login:", error);
-    res.status(500).send("Internal Server Error");
+    return redirectWithMessage(
+      res,
+      "/",
+      "error",
+      "Something went wrong while logging you in."
+    );
   }
 };
 

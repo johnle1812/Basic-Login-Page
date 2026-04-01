@@ -3,33 +3,85 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login Page</title>
+    <title><%= pageTitle %> | Basic Login Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
   </head>
-  <body>
-    <h2>Login</h2>
-    <form action="/login" class="login-container" method="post">
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          placeholder="Enter a username"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="password"
-          required
-        />
-      </div>
-      <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+  <body class="auth-page">
+    <main class="auth-shell">
+      <section class="brand-panel">
+        <p class="eyebrow">Basic Login Page</p>
+        <h1>Secure sign-in with a cleaner first impression.</h1>
+        <p class="hero-copy">
+          A lightweight authentication flow with a modern, welcoming interface
+          that feels much more polished than a default form.
+        </p>
+        <div class="feature-grid">
+          <article>
+            <span>Fast</span>
+            <p>Focused layout with instant visual hierarchy.</p>
+          </article>
+          <article>
+            <span>Friendly</span>
+            <p>Clear messaging and softer interactions for new users.</p>
+          </article>
+          <article>
+            <span>Ready</span>
+            <p>Configured for environment-based deployment.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card-panel">
+        <div class="card">
+          <p class="card-kicker">Welcome back</p>
+          <h2>Log in to continue</h2>
+          <p class="card-copy">
+            Enter your username and password to access the app.
+          </p>
+
+          <% if (error) { %>
+          <div class="message message-error"><%= error %></div>
+          <% } %>
+
+          <% if (success) { %>
+          <div class="message message-success"><%= success %></div>
+          <% } %>
+
+          <form action="/login" class="auth-form" method="post">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="johnny"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+            <button type="submit">Log In</button>
+          </form>
+
+          <p class="switch-link">
+            New here? <a href="/signup">Create an account</a>
+          </p>
+        </div>
+      </section>
+    </main>
   </body>
 </html>
