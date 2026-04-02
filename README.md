@@ -43,32 +43,6 @@ The goal is not just the login page itself, but also understanding how AI can su
 
 Originally, I built this project as a learning lesson for me on how to work with with Node.js, EJS, as well as make an application that works with a database.
 
-## Local setup
-
-1. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-2. Create a `.env` file based on `.env.example`.
-
-3. Add your values:
-
-   ```env
-   PORT=3000
-   JWT_SECRET_KEY=your-strong-secret
-   MONGODB_URI=your-mongodb-connection-string
-   ```
-
-4. Start the app:
-
-   ```bash
-   npm start
-   ```
-
-5. Open `http://localhost:3000`
-
 ## How I used Codex in the deployment process
 
 I used Codex to help me:
@@ -81,23 +55,6 @@ I used Codex to help me:
 - troubleshoot deployment issues from logs
 
 This made the repo a practical test case for learning how AI can assist with both coding and deployment tasks.
-
-## Deploy on Render
-
-This repo now includes `render.yaml`, which makes Render setup easier.
-
-1. Push this project to GitHub.
-2. Create a MongoDB Atlas database if you do not already have one.
-3. In Render, create a new `Web Service` from this GitHub repo.
-4. Render should detect:
-   - Build command: `npm install`
-   - Start command: `npm start`
-5. Add these environment variables in Render:
-   - `JWT_SECRET_KEY`
-   - `MONGODB_URI`
-   - `PORT` is optional because Render provides one automatically
-6. Make sure MongoDB Atlas allows connections from Render and that your database password has been rotated if it was previously exposed.
-7. Deploy the service and use the generated Render URL.
 
 ## Important security note
 
