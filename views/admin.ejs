@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home | Basic Login Page</title>
+    <title>Admin | Basic Login Page</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -14,36 +14,27 @@
   </head>
   <body class="home-page">
     <main class="home-shell">
-      <section class="home-card">
-        <p class="eyebrow">Signed In</p>
-        <h1>Welcome, <%= username %>.</h1>
-        <% if (success) { %>
-        <div class="message message-success"><%= success %></div>
-        <% } %>
+      <section class="home-card admin-card">
+        <p class="eyebrow">Admin Area</p>
+        <h1>Welcome back, <%= username %>.</h1>
         <p class="hero-copy">
-          Your session is now being protected by a JWT stored in an HTTP-only
-          cookie. Every protected request is verified on the server before this
-          page is shown.
+          This section is protected by JWT-based authentication and role checks.
+          Only users whose MongoDB `role` is set to `admin` can reach this page.
         </p>
         <div class="detail-grid">
           <article>
-            <span>Username</span>
-            <p><%= username %></p>
+            <span>Current role</span>
+            <p><%= role %></p>
           </article>
           <article>
-            <span>Role</span>
-            <p><%= role %></p>
+            <span>Access rule</span>
+            <p>Verified token plus admin role required.</p>
           </article>
         </div>
         <div class="home-actions">
-          <% if (role === "admin") { %>
-          <a class="button-link" href="/admin">Open admin area</a>
-          <% } %>
+          <a class="button-link" href="/home">Back to home</a>
           <form action="/logout" method="post" class="inline-form">
-            <button
-              type="submit"
-              class="button-link <%= role === 'admin' ? 'button-link-secondary' : '' %>"
-            >
+            <button type="submit" class="button-link button-link-secondary">
               Log out
             </button>
           </form>

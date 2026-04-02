@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Access Denied | Basic Login Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="home-page">
+    <main class="home-shell">
+      <section class="home-card">
+        <p class="eyebrow">Access Denied</p>
+        <h1>This area is for admins only.</h1>
+        <p class="hero-copy">
+          You are signed in as <strong><%= username %></strong> with the role
+          <strong><%= role %></strong>, but this page requires the `admin` role.
+        </p>
+        <div class="home-actions">
+          <a class="button-link" href="/home">Go to home</a>
+          <form action="/logout" method="post" class="inline-form">
+            <button type="submit" class="button-link button-link-secondary">
+              Log out
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -258,6 +258,48 @@ a {
   margin-top: 28px;
 }
 
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 26px;
+}
+
+.detail-grid article {
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(22, 32, 51, 0.05);
+  border: 1px solid rgba(22, 32, 51, 0.08);
+}
+
+.detail-grid span {
+  display: block;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--muted-dark);
+}
+
+.detail-grid p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.inline-form {
+  margin: 0;
+}
+
+.inline-form button {
+  width: 100%;
+}
+
+.admin-card {
+  width: min(760px, 100%);
+}
+
 .button-link-secondary {
   background: transparent;
   color: var(--text-dark);
@@ -291,5 +333,9 @@ a {
   .home-card {
     padding: 24px;
     border-radius: 22px;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
   }
 }

@@ -7,6 +7,27 @@ const redirectWithMessage = (res, path, type, message) => {
   return res.redirect(`${path}?${params.toString()}`);
 };
 
+const issueAuthCookie = (res, user) => {
+  const token = jwt.sign(
+    {
+      userId: user._id,
+      username: user.username,
+      role: user.role || "user",
+    },
+    process.env.JWT_SECRET_KEY,
+    { expiresIn: "1h" }
+  );
+
+  res.cookie("token", token, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 60 * 60 * 1000,
+  });
+
+  return token;
+};
+
 const registerUser = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -34,8 +55,12 @@ const registerUser = async (req, res) => {
     await newUser.save();
 
     if (newUser) {
-      return res.redirect(
-        `/home?username=${encodeURIComponent(newUser.username)}`
+      issueAuthCookie(res, newUser);
+      return redirectWithMessage(
+        res,
+        "/home",
+        "success",
+        "Your account has been created and you are now signed in."
       );
     }
 
@@ -69,30 +94,13 @@ const loginUser = async (req, res) => {
     // Check password
     const match = await bcrypt.compare(password, user.password);
     if (match) {
-      const token = jwt.sign(
-        {
-          userId: user._id,
-          username: user.username,
-          role: user.role || "user",
-        },
-        process.env.JWT_SECRET_KEY,
-        { expiresIn: "1h" }
+      issueAuthCookie(res, user);
+      return redirectWithMessage(
+        res,
+        "/home",
+        "success",
+        "You have logged in successfully."
       );
-
-      jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
-        if (err) {
-          console.error("JWT verification failed:", err);
-          return redirectWithMessage(
-            res,
-            "/",
-            "error",
-            "Your session could not be created."
-          );
-        }
-        console.log("JWT verified successfully:", decoded);
-      });
-      res.cookie("token", token, { httpOnly: true });
-      return res.redirect(`/home?username=${encodeURIComponent(user.username)}`);
     } else {
       return redirectWithMessage(
         res,
@@ -112,4 +120,14 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser };
+const logoutUser = (req, res) => {
+  res.clearCookie("token");
+  return redirectWithMessage(
+    res,
+    "/",
+    "success",
+    "You have been logged out."
+  );
+};
+
+module.exports = { registerUser, loginUser, logoutUser };
