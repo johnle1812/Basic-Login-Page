@@ -55,7 +55,3 @@ I used Codex to help me:
 - troubleshoot deployment issues from logs
 
 This made the repo a practical test case for learning how AI can assist with both coding and deployment tasks.
-
-## Important security note
-
-Your previous MongoDB connection string was committed directly in `db/db.js`. Even though it has now been removed from the app code, you should still rotate that database password in MongoDB Atlas because it was exposed in the repository history.
